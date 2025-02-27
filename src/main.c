@@ -1,26 +1,6 @@
 #include "../inc/philo.h"
 // ./philo number_of_philosophers time_to_die time_to_eat time_to_sleep [meals_max]
 
-
-//to print values
-void	print_global_vars(t_global *global)
-{
-	if (!global)
-	{
-		printf("Global pointer is NULL\n");
-		return;
-	}
-	printf("Philosopher Number: %ld\n", global->philo_nbr);
-	printf("Time to Die: %ld ms\n", global->time_to_die / 1000);
-	printf("Time to Eat: %ld ms\n", global->time_to_eat / 1000);
-	printf("Time to Sleep: %ld ms\n", global->time_to_sleep / 1000);
-	printf("Max Meals: %ld\n", global->meals_max);
-	printf("Start Simulation: %ld\n", global->start_simulation);
-	printf("End Simulation: %s\n", global->end_simulation ? "true" : "false");
-}
-
-
-
 int	main(int argc, char *argv[])
 {
 	t_global	global_vars;
@@ -29,7 +9,7 @@ int	main(int argc, char *argv[])
 	{
 		parse_args(&global_vars, argv); //parsear
 		print_global_vars(&global_vars);
-		// init_everything
+		// init_structs(&global_vars)
 		//start simulation
 		//clean aka a philo dies or everyone is full
 	}

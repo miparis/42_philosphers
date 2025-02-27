@@ -6,7 +6,7 @@
 /*   By: miparis <miparis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 14:09:35 by miparis           #+#    #+#             */
-/*   Updated: 2025/02/27 12:41:01 by miparis          ###   ########.fr       */
+/*   Updated: 2025/02/27 15:52:54 by miparis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 #include <limits.h>
 #include <stdbool.h>
 #include <sys/time.h>
+#include <errno.h>
 
 // Define Colors
 # define G	"\033[1;32m"  // Bold Green
@@ -37,6 +38,18 @@
 
 typedef pthread_mutex_t t_mtx;
 typedef struct global t_global;
+
+typedef enum e_mutype
+{
+	CREATE,
+	INIT,
+	JOIN,
+	LOCK,
+	UNLOCK,
+	DETACH,
+	DESTROY
+}	t_mutype;
+
 
 typedef struct fork
 {
@@ -70,12 +83,17 @@ typedef struct global
 	t_philo	*philos;
 }				t_global;
 
-/*SECTION -			 main functions     */
-
+/*SECTION -			 main functions     			*/
 void	error_exit(const char *error);
 
-/*SECTION -			 init argument functions     */
-void 	parse_args(t_global *global_vars, char **argv);
+/*SECTION -			 init argument functions    	 */
+void	parse_args(t_global *global_vars, char **argv);
+
+/* 					Memory & init function			s*/
+void	*c_malloc(size_t bytes);
+void	thread_handler(pthread_t *thread, t_mutype type,
+		void *(*funct)(void *), void *data);
+void	mutex_handler(t_mtx *mutex, t_mutype type);
 
 /*!SECTION            TEST						*/
 void	print_global_vars(t_global *global);
