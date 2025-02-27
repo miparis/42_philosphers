@@ -6,7 +6,7 @@
 /*   By: miparis <miparis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 14:09:35 by miparis           #+#    #+#             */
-/*   Updated: 2025/02/27 12:14:38 by miparis          ###   ########.fr       */
+/*   Updated: 2025/02/27 12:41:01 by miparis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,5 +76,9 @@ void	error_exit(const char *error);
 
 /*SECTION -			 init argument functions     */
 void 	parse_args(t_global *global_vars, char **argv);
+
+/*!SECTION            TEST						*/
+void	print_global_vars(t_global *global);
+
 
 #endif

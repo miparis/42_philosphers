@@ -35,7 +35,7 @@ int	main(int argc, char *argv[])
 	}
 	else
 	{
-		error_exit("Please insert a valid number of arguments\n");
+		error_exit("Please insert a valid amount of arguments\n");
 		//free everything
 	}
 	return (0);

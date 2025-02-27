@@ -6,7 +6,7 @@
 /*   By: miparis <miparis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 11:13:04 by miparis           #+#    #+#             */
-/*   Updated: 2025/02/27 12:18:56 by miparis          ###   ########.fr       */
+/*   Updated: 2025/02/27 12:48:50 by miparis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static long	ft_atol(const char *str)
 	str = check_str(str); //check string
 	while (is_digit(*str))
 	{
-		nbr = (nbr * 10 ) + (*str - 48);
+		nbr = (nbr * 10 ) + (*str - '0');
 		str++;
 	}
 	if (nbr > INT_MAX)
@@ -72,12 +72,13 @@ void 	parse_args(t_global *global_vars, char **argv)
 	global_vars->time_to_die = ft_atol(argv[2]) * 1000; // milisegundos a microsegundos
 	global_vars->time_to_eat = ft_atol(argv[3]) * 1000;
 	global_vars->time_to_sleep = ft_atol(argv[4]) * 1000;
-	if (global_vars->time_to_die < MS 
-		|| global_vars->time_to_eat < MS
-		|| global_vars->time_to_sleep < MS)
-		error_exit("Min time 60ms for time arguments\n");
 	if (argv[5])
 		global_vars->meals_max = ft_atol(argv[5]);
 	else
 		global_vars->meals_max = -1;
+	//print_global_vars(global_vars);
+	if (global_vars->time_to_die < MS 
+		|| global_vars->time_to_eat < MS
+		|| global_vars->time_to_sleep < MS)
+		error_exit("Min time 60ms for time arguments\n");
 }
