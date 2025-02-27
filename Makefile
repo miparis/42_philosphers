@@ -6,13 +6,15 @@
 #    By: miparis <miparis@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/20 12:32:22 by miparis           #+#    #+#              #
-#    Updated: 2025/02/20 14:53:31 by miparis          ###   ########.fr        #
+#    Updated: 2025/02/27 11:57:41 by miparis          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = philo
 
-SRCS =  src/test.c
+SRCS =  src/main.c \
+		src/args.c \
+		src/utils.c
 
 # Define Colors
 GREEN  := \033[1;32m  # Bold Green
@@ -38,6 +40,7 @@ $(NAME): $(OBJS)
 	@echo "$(BOLD)$(BLUE)Philosophers are now operative$(NC)"
 
 clean:
+	@$(REMOVE) $(NAME)
 	@$(REMOVE) $(OBJS)
 
 fclean: clean
