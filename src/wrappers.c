@@ -6,7 +6,7 @@
 /*   By: miparis <miparis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 14:46:20 by miparis           #+#    #+#             */
-/*   Updated: 2025/02/27 15:52:48 by miparis          ###   ########.fr       */
+/*   Updated: 2025/02/27 17:16:01 by miparis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void *c_malloc(size_t bytes)
 		error_exit(R "Error with malloc\n");
 	return (rst);
 }	
-
+/*NOTE - Replica of errno messages for mutex related errors*/ 
 static void check_mutex(int status)
 {
 	if (status == 0)
@@ -41,7 +41,7 @@ static void check_mutex(int status)
 		printf(R "Mutex error: Unknown mutex error: %d\n", status);
 }
 
-// Wrapper for mutexs and their control
+/*NOTE - Wrapper function & control for all of the mutex related functions*/ 
 void	mutex_handler(t_mtx *mutex, t_mutype type)
 {
 	if (type == "INIT")
@@ -55,6 +55,8 @@ void	mutex_handler(t_mtx *mutex, t_mutype type)
 	else
 		error_exit("Invalid type for mutex use\n");
 }
+
+/*NOTE - Replica of errno messages on the thread related functions*/ 
 static void	thread_errors(int status)
 {
 	if (status == 0)
@@ -71,6 +73,7 @@ static void	thread_errors(int status)
 		printf(R "Thread error: Unknown error code %d\n", status);
 }
 
+/*NOTE - Wrapper function & control for all of the thread related functions*/ 
 void	thread_handler(pthread_t *thread, t_mutype type,
 		void *(*funct)(void *), void *data)
 {
