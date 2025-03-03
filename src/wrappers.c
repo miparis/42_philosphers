@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wrappers.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: miparis <miparis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: miparis <miparis@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 14:46:20 by miparis           #+#    #+#             */
-/*   Updated: 2025/02/27 17:16:01 by miparis          ###   ########.fr       */
+/*   Updated: 2025/03/03 11:51:37 by miparis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,20 +44,20 @@ static void check_mutex(int status)
 /*NOTE - Wrapper function & control for all of the mutex related functions*/ 
 void	mutex_handler(t_mtx *mutex, t_mutype type)
 {
-	if (type == "INIT")
+	if (type == INIT)
 		check_mutex(pthread_mutex_init(mutex, NULL));
-	else if (type == "LOCK")
+	else if (type == LOCK)
 		check_mutex(pthread_mutex_lock(mutex));
-	else if (type == "UNLOCK")
+	else if (type == UNLOCK)
 		check_mutex(pthread_mutex_unlock(mutex));
-	else if (type == "DESTROY")
-		check_mutex(pthread_attr_destroy(mutex));
+	else if (type == DESTROY)
+		check_mutex(pthread_mutex_destroy(mutex));
 	else
 		error_exit("Invalid type for mutex use\n");
 }
 
 /*NOTE - Replica of errno messages on the thread related functions*/ 
-static void	thread_errors(int status)
+static void	check_thread(int status)
 {
 	if (status == 0)
 		return ;

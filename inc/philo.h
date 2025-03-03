@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: miparis <miparis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: miparis <miparis@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 14:09:35 by miparis           #+#    #+#             */
-/*   Updated: 2025/02/27 15:52:54 by miparis          ###   ########.fr       */
+/*   Updated: 2025/03/03 11:44:53 by miparis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,8 @@ typedef struct philo
 	long 		last_meal_time;
 	bool		full; // set to true if meals taken == meals_max
 	int			p_pos; // position in the "table"
-	t_fork		*right; /*   FORKS        */
-	t_fork		*left;
+	t_fork		*first; /*   FORKS        */
+	t_fork		*second;
 	pthread_t	t_id; // ID del hilo
 	t_global	*g_vars;
 }				t_philo;
@@ -94,9 +94,11 @@ void	*c_malloc(size_t bytes);
 void	thread_handler(pthread_t *thread, t_mutype type,
 		void *(*funct)(void *), void *data);
 void	mutex_handler(t_mtx *mutex, t_mutype type);
+void 	init_structs(t_global *global_vars);
 
 /*!SECTION            TEST						*/
 void	print_global_vars(t_global *global);
+void	print_philos(t_global *global_vars);
 
 
 #endif

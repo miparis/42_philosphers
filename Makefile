@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: miparis <miparis@student.42.fr>            +#+  +:+       +#+         #
+#    By: miparis <miparis@student.42madrid.com>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/20 12:32:22 by miparis           #+#    #+#              #
-#    Updated: 2025/02/27 11:57:41 by miparis          ###   ########.fr        #
+#    Updated: 2025/03/03 11:08:58 by miparis          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,9 @@ NAME = philo
 
 SRCS =  src/main.c \
 		src/args.c \
-		src/utils.c
+		src/utils.c \
+		src/wrappers.c \
+		src/inits.c \
 
 # Define Colors
 GREEN  := \033[1;32m  # Bold Green
