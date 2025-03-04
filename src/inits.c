@@ -6,7 +6,7 @@
 /*   By: miparis <miparis@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 14:17:53 by miparis           #+#    #+#             */
-/*   Updated: 2025/03/03 15:07:00 by miparis          ###   ########.fr       */
+/*   Updated: 2025/03/04 17:26:45 by miparis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,12 @@ static void assign_forks(t_philo *philo, t_fork *fork, int pos)
 
 	philo_nbr = philo->g_vars->philo_nbr;
 	
-	philo->first = &fork[pos];
-	philo->second = &fork[(pos + 1) % philo_nbr];
+	philo->first = &fork[(pos + 1) % philo_nbr]; //the first fork is the one to the right
+	philo->second = &fork[pos];
 	if (philo->philo_nbr % 2 == 0)
 	{
-		philo->first = &fork[(pos + 1) % philo_nbr];
-		philo->second = &fork[pos];
+		philo->first = &fork[pos];
+		philo->second = &fork[(pos + 1) % philo_nbr]; //the second fork is the one to the left
 	}
 }
 
@@ -53,8 +53,11 @@ void 	init_structs(t_global *global_vars)
 	i = -1;
 	philo_nbr = global_vars->philo_nbr;	
 	global_vars->end_simulation = false;
+	global_vars->threads_ready = false;
 	global_vars->philos = c_malloc(sizeof(t_philo) * philo_nbr);
 	global_vars->forks = c_malloc(sizeof(t_fork) * philo_nbr);
+	mutex_handler(&global_vars->monitor, INIT);
+	mutex_handler(&global_vars->write, INIT);
 	while (++i < philo_nbr)	//iterator for philo init and forks assigment in each
 	{
 		mutex_handler(&global_vars->forks[i].fork, INIT);// assign forks with mutex handler	

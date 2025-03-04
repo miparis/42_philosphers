@@ -6,7 +6,7 @@
 /*   By: miparis <miparis@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 11:01:47 by miparis           #+#    #+#             */
-/*   Updated: 2025/03/03 12:07:39 by miparis          ###   ########.fr       */
+/*   Updated: 2025/03/04 17:22:57 by miparis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,50 @@ void	error_exit(const char *error)
 {
 	printf(R "%s\n" NC, error); //NC restaura el color
 	exit(EXIT_FAILURE);
+}
+//This function will endlessly check for the state of threads 
+//ready until all the threads are created
+void	wait_all_threads(t_global *g_vars)
+{
+	while (get_bool(&g_vars->monitor, &g_vars->threads_ready) == false)
+		return ;
+}
+
+long	get_time(void)
+{
+	struct timeval	time;
+	long			milliseconds;
+	long			seconds;
+
+	if (gettimeofday(&time, NULL))
+		error_exit("Error getting time\n");
+	seconds = time.tv_sec * 1000;//pasamos segundos y microsegundos a milisegundos
+	milliseconds = time.tv_usec / 1000;
+	return (seconds + milliseconds);
+}
+
+void	precise_usleep(long time, t_global *g_vars)
+{
+	long	start;
+	long	transcurred;
+	long	remaining;
+
+	start = get_time(); //Obtener tiempo de inicio
+	while (gettime() - start < time) //nos mantenemos en el bucle hasta que time == 0
+	{
+		if (simulation_end(g_vars))
+			break; //salimos si ya no hay simulación
+		transcurred = get_time() - start;
+		remaining = time - transcurred;
+		if (remaining > 1000) //Si queda más de 1000 μs (1 ms), llamamos a usleep() con la mitad del tiempo restante para reducir la carga de la CPU.
+			usleep(remaining / 2);
+		else
+		{
+			//Si el tiempo restante es muy pequeño, entramos en un busy-waiting loop para mayor precisión.
+			while (get_time() - start < time)
+				;
+		}
+	}
 }
 
 //to print values
