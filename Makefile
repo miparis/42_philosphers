@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: miparis <miparis@student.42madrid.com>     +#+  +:+       +#+         #
+#    By: miparis <miparis@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/20 12:32:22 by miparis           #+#    #+#              #
-#    Updated: 2025/03/03 11:08:58 by miparis          ###   ########.fr        #
+#    Updated: 2025/03/06 16:07:05 by miparis          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,6 +17,8 @@ SRCS =  src/main.c \
 		src/utils.c \
 		src/wrappers.c \
 		src/inits.c \
+		src/simulation.c \
+		src/syncronization.c \
 
 # Define Colors
 GREEN  := \033[1;32m  # Bold Green

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: miparis <miparis@student.42madrid.com>     +#+  +:+       +#+        */
+/*   By: miparis <miparis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 14:09:35 by miparis           #+#    #+#             */
-/*   Updated: 2025/03/04 17:26:28 by miparis          ###   ########.fr       */
+/*   Updated: 2025/03/06 15:54:53 by miparis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,15 @@ typedef enum e_mutype
 	DESTROY
 }	t_mutype;
 
+typedef enum e_status
+{
+	DIED,
+	SLEEPING,
+	EATING,
+	THINKING,
+	TAKE_FIRST_FORK,
+	TAKE_SECOND_FORK
+}			t_status;
 
 typedef struct fork
 {
@@ -66,6 +75,7 @@ typedef struct philo
 	int			p_pos; // position in the "table"
 	t_fork		*first; /*   FORKS        */
 	t_fork		*second;
+	t_mtx		*philo_mutex; //utilizado durante la comida para que no realice ninguna otra acción mientras realiza otra
 	pthread_t	t_id; // ID del hilo
 	t_global	*g_vars;
 }				t_philo;
@@ -91,6 +101,7 @@ void	error_exit(const char *error);
 void	wait_all_threads(t_global *g_vars);
 long	get_time(void);
 void	precise_usleep(long time, t_global *g_vars);
+void 	write_status(t_status status, t_philo *philo);
 
 /*SECTION -			 init argument functions    	*/
 void	parse_args(t_global *global_vars, char **argv);
