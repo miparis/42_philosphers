@@ -6,7 +6,7 @@
 /*   By: miparis <miparis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 11:01:47 by miparis           #+#    #+#             */
-/*   Updated: 2025/03/06 16:13:04 by miparis          ###   ########.fr       */
+/*   Updated: 2025/03/06 16:34:30 by miparis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,7 @@ void	precise_usleep(long time, t_global *g_vars)
 		else
 		{
 			//Si el tiempo restante es muy pequeño, entramos en un busy-waiting loop para mayor precisión.
-			while (get_time() - start < time)
-				;
+			while (get_time() - start < time);
 		}
 	}
 }

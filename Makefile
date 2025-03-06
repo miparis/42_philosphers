@@ -6,7 +6,7 @@
 #    By: miparis <miparis@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/20 12:32:22 by miparis           #+#    #+#              #
-#    Updated: 2025/03/06 16:07:05 by miparis          ###   ########.fr        #
+#    Updated: 2025/03/06 16:37:48 by miparis          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,6 +19,7 @@ SRCS =  src/main.c \
 		src/inits.c \
 		src/simulation.c \
 		src/syncronization.c \
+		src/get_set.c
 
 # Define Colors
 GREEN  := \033[1;32m  # Bold Green
@@ -34,7 +35,7 @@ OBJS = ${SRCS:.c=.o}
 .SILENT: $(OBJS)
 
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -g3 -lpthread
+CFLAGS = -Wall -Wextra -Werror -g3
 REMOVE = rm -f
 
 all: $(NAME)
