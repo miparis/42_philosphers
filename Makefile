@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: miparis <miparis@student.42.fr>            +#+  +:+       +#+         #
+#    By: miparis <miparis@student.42madrid.com>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/20 12:32:22 by miparis           #+#    #+#              #
-#    Updated: 2025/03/06 16:37:48 by miparis          ###   ########.fr        #
+#    Updated: 2025/03/10 19:38:09 by miparis          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ SRCS =  src/main.c \
 		src/wrappers.c \
 		src/inits.c \
 		src/simulation.c \
-		src/syncronization.c \
+		src/monitoring.c \
 		src/get_set.c
 
 # Define Colors

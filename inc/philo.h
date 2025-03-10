@@ -6,7 +6,7 @@
 /*   By: miparis <miparis@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 14:09:35 by miparis           #+#    #+#             */
-/*   Updated: 2025/03/10 11:57:40 by miparis          ###   ########.fr       */
+/*   Updated: 2025/03/10 19:33:23 by miparis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ typedef struct philo
 	int			philo_nbr;
 	long		meals_taken;
 	long 		last_meal_time;
+	bool		ready;
 	bool		full; // set to true if meals taken == meals_max
 	int			p_pos; // position in the "table"
 	t_fork		*first; /*   FORKS        */
@@ -82,19 +83,20 @@ typedef struct philo
 
 typedef struct global
 {
-	long	philo_nbr;
-	long	time_to_die;
-	long	time_to_eat;
-	long	time_to_sleep;
-	long	meals_max;
-	long	start_simulation; //Time of the start of the simulation
-	bool	threads_ready; //Wait for threads to be created
-	bool	end_simulation; //For the monitor
-	t_mtx	monitor;
-	t_mtx	table; //Avoid races while reading the g_vars 
-	t_mtx	write;
-	t_fork	*forks;
-	t_philo	*philos;
+	long		philo_nbr;
+	long		time_to_die;
+	long		time_to_eat;
+	long		time_to_sleep;
+	long		meals_max;
+	long		start_simulation; //Time of the start of the simulation
+	bool		threads_ready; //Wait for threads to be created
+	bool		end_simulation; //For the monitor
+	t_mtx		t_ready;
+	t_mtx		table; //Avoid races while reading the g_vars 
+	t_mtx		write;
+	t_fork		*forks;
+	t_philo		*philos;
+	pthread_t	monitor;
 }				t_global;
 
 /*SECTION -			 Utils    						*/
@@ -115,6 +117,11 @@ void	thread_handler(pthread_t *thread, t_mutype type,
 		void *(*funct)(void *), void *data);
 void	mutex_handler(t_mtx *mutex, t_mutype type);
 void 	init_structs(t_global *global_vars);
+
+
+/*					Monitoring						*/
+void	*monitor_dinner(void *data);
+bool	threads_count(void *data);
 
 /*					Getters & setters				*/
 bool	get_state(t_global *g_vars);
