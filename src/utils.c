@@ -6,7 +6,7 @@
 /*   By: miparis <miparis@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 11:01:47 by miparis           #+#    #+#             */
-/*   Updated: 2025/03/10 10:52:34 by miparis          ###   ########.fr       */
+/*   Updated: 2025/03/10 11:29:25 by miparis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	error_exit(const char *error)
 //ready until all the threads are created
 void	wait_all_threads(t_global *g_vars)
 {
-	while (get_bool(&g_vars->monitor, &g_vars->threads_ready) == false)
+	while (get_bool(&g_vars->table, &g_vars->threads_ready) == false)
 		return ;
 }
 

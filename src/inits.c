@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   inits.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: miparis <miparis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: miparis <miparis@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 14:17:53 by miparis           #+#    #+#             */
-/*   Updated: 2025/03/06 16:55:20 by miparis          ###   ########.fr       */
+/*   Updated: 2025/03/10 11:53:40 by miparis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ static void init_philo_struct(t_global *global_vars)
 		philo->meals_taken = 0;
 		philo->p_pos = i;
 		philo->g_vars = global_vars;
+		philo->running = true;
 		mutex_handler(&philo->philo_mutex, INIT);
 		assign_forks(philo, global_vars->forks, i);
 	}
@@ -58,7 +59,7 @@ void 	init_structs(t_global *global_vars)
 	global_vars->start_simulation = -1;
 	global_vars->philos = c_malloc(sizeof(t_philo) * philo_nbr);
 	global_vars->forks = c_malloc(sizeof(t_fork) * philo_nbr);
-	mutex_handler(&global_vars->monitor, INIT);
+	mutex_handler(&global_vars->table, INIT);
 	mutex_handler(&global_vars->write, INIT);
 	while (++i < philo_nbr)	//iterator for philo init and forks assigment in each
 	{

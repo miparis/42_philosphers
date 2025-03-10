@@ -6,7 +6,7 @@
 /*   By: miparis <miparis@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 15:30:51 by miparis           #+#    #+#             */
-/*   Updated: 2025/03/10 10:50:16 by miparis          ###   ########.fr       */
+/*   Updated: 2025/03/10 11:57:45 by miparis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,11 +87,12 @@ void	simulation(t_global *global_vars)
 		while ((++i < global_vars->philo_nbr))
 		{
 			printf("---Thread created -> [%d]\n", i);
-			thread_handler(&global_vars->philos[i].t_id, CREATE, (void *(*)(void *))dinner, &global_vars->philos[i]);
+			thread_handler(&global_vars->philos[i].t_id, CREATE,dinner, &global_vars->philos[i]);
 		}
 	}
+	thread_handler(&global_vars->monitor, CREATE,monitor_dinner, global_vars);
 	printf("Ya hemos creado los threads\n");
-	set_bool(&global_vars->monitor, &global_vars->threads_ready, true);//threads created
+	set_bool(&global_vars->table, &global_vars->threads_ready, true);//threads created
 	i = -1;
 	while (++i < global_vars->philo_nbr) // Wait for all threads to finish
 	{

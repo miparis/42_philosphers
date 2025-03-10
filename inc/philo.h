@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: miparis <miparis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: miparis <miparis@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 14:09:35 by miparis           #+#    #+#             */
-/*   Updated: 2025/03/06 16:54:05 by miparis          ###   ########.fr       */
+/*   Updated: 2025/03/10 11:57:40 by miparis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,8 @@ typedef struct global
 	long	start_simulation; //Time of the start of the simulation
 	bool	threads_ready; //Wait for threads to be created
 	bool	end_simulation; //For the monitor
-	t_mtx	monitor; //Avoid races while reading the g_vars 
+	t_mtx	monitor;
+	t_mtx	table; //Avoid races while reading the g_vars 
 	t_mtx	write;
 	t_fork	*forks;
 	t_philo	*philos;
