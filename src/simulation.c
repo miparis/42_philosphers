@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   simulation.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: miparis <miparis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: miparis <miparis@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 15:30:51 by miparis           #+#    #+#             */
-/*   Updated: 2025/03/06 17:10:24 by miparis          ###   ########.fr       */
+/*   Updated: 2025/03/10 10:50:16 by miparis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,19 +82,15 @@ void	simulation(t_global *global_vars)
 		printf("Only one philo\n");//run 1 philo simulation
 	else
 	{
-		printf("PHILO NBR: %ld\n", global_vars->philo_nbr);
+		global_vars->start_simulation = get_time();
+		printf(B G"Simulation started at %ld\n" NC, global_vars->start_simulation);
 		while ((++i < global_vars->philo_nbr))
 		{
-			printf("CREANDO THREADS\n");
-			//thread_handler(&global_vars->philos[i].t_id, dinner(&)(), 
-				//&global_vars->philos[i], CREATE);
-			thread_handler(&global_vars->philos[i].t_id, CREATE, (void *(*)(void *))dinner, global_vars);
-				printf("Ya hemos creado los threads\n");
+			printf("---Thread created -> [%d]\n", i);
+			thread_handler(&global_vars->philos[i].t_id, CREATE, (void *(*)(void *))dinner, &global_vars->philos[i]);
 		}
 	}
 	printf("Ya hemos creado los threads\n");
-	global_vars->start_simulation = get_time();
-	printf(B "Simulation started at %ld\n", global_vars->start_simulation);
 	set_bool(&global_vars->monitor, &global_vars->threads_ready, true);//threads created
 	i = -1;
 	while (++i < global_vars->philo_nbr) // Wait for all threads to finish

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   args.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: miparis <miparis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: miparis <miparis@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 11:13:04 by miparis           #+#    #+#             */
-/*   Updated: 2025/02/27 12:48:50 by miparis          ###   ########.fr       */
+/*   Updated: 2025/03/10 10:45:01 by miparis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,4 +81,5 @@ void 	parse_args(t_global *global_vars, char **argv)
 		|| global_vars->time_to_eat < MS
 		|| global_vars->time_to_sleep < MS)
 		error_exit("Min time 60ms for time arguments\n");
+	global_vars->start_simulation = 0;
 }

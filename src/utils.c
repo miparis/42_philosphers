@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: miparis <miparis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: miparis <miparis@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 11:01:47 by miparis           #+#    #+#             */
-/*   Updated: 2025/03/06 16:34:30 by miparis          ###   ########.fr       */
+/*   Updated: 2025/03/10 10:52:34 by miparis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ void write_status(t_status status, t_philo *philo)
 
     transcurred = get_time() - philo->g_vars->start_simulation;
     mutex_handler(&philo->g_vars->write, LOCK);
-
     if (((status == TAKE_FIRST_FORK) || (status == TAKE_SECOND_FORK)) 
         && (!get_state(philo->g_vars)))
         printf(G "%ld" NC " [%d] has taken a fork\n", transcurred, philo->philo_nbr);
@@ -103,7 +102,7 @@ void	print_global_vars(t_global *global)
 	printf("Time to Eat: %ld ms\n", global->time_to_eat / 1000);
 	printf("Time to Sleep: %ld ms\n", global->time_to_sleep / 1000);
 	printf("Max Meals: %ld\n", global->meals_max);
-	printf("Start Simulation: %ld\n", global->start_simulation);
+	//printf("Start Simulation: %ld\n", global->start_simulation);
 	printf("End Simulation: %s\n", global->end_simulation ? "true" : "false");
 }
 
