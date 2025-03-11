@@ -6,7 +6,7 @@
 /*   By: miparis <miparis@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 16:34:30 by miparis           #+#    #+#             */
-/*   Updated: 2025/03/10 19:42:30 by miparis          ###   ########.fr       */
+/*   Updated: 2025/03/11 10:42:57 by miparis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,19 +58,21 @@ void	*monitor_dinner(void *data)
 	g_vars = (t_global *)data;
 	i = -1;
 	//make sure every philo is running by running threds count endesly
-	while (!(threads_count(g_vars)))
+	while (!threads_count(g_vars))
 		;
 	//check constantly if the transcurred time is greater than the time to die
 	//if so, we end the simulation
 	//also cehck if all the philos have eaten the max amount of times
-	while (!(get_state(g_vars)))
+	while (!get_state(g_vars))
 	{
+		i = 0;
 		while(++i < g_vars->philo_nbr)
 		{
 			if (philo_died(g_vars->philos + i))
 			{
 				set_bool(&g_vars->table, &g_vars->end_simulation, true);
 				write_status(DIED, g_vars->philos + i);
+				return (NULL);
 			}
 		}
 	}

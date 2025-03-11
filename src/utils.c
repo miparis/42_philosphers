@@ -6,7 +6,7 @@
 /*   By: miparis <miparis@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 11:01:47 by miparis           #+#    #+#             */
-/*   Updated: 2025/03/10 11:29:25 by miparis          ###   ########.fr       */
+/*   Updated: 2025/03/11 10:52:51 by miparis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,20 +22,16 @@ void	error_exit(const char *error)
 void	wait_all_threads(t_global *g_vars)
 {
 	while (get_bool(&g_vars->table, &g_vars->threads_ready) == false)
-		return ;
+		;
 }
 
-long	get_time(void)
+long get_time(void)
 {
-	struct timeval	time;
-	long			milliseconds;
-	long			seconds;
+    struct timeval tv;
 
-	if (gettimeofday(&time, NULL))
-		error_exit("Error getting time\n");
-	seconds = time.tv_sec * 1000;//pasamos segundos y microsegundos a milisegundos
-	milliseconds = time.tv_usec / 1000;
-	return (seconds + milliseconds);
+    if (gettimeofday(&tv, NULL))
+        error_exit("Error getting time\n");
+    return (tv.tv_sec * 1000) + (tv.tv_usec / 1000);
 }
 
 void	precise_usleep(long time, t_global *g_vars)

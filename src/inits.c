@@ -6,7 +6,7 @@
 /*   By: miparis <miparis@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 14:17:53 by miparis           #+#    #+#             */
-/*   Updated: 2025/03/10 19:46:10 by miparis          ###   ########.fr       */
+/*   Updated: 2025/03/11 10:44:05 by miparis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void 	init_structs(t_global *global_vars)
 	philo_nbr = global_vars->philo_nbr;	
 	global_vars->end_simulation = false;
 	global_vars->threads_ready = false;
-	global_vars->start_simulation = -1;
+	global_vars->start_simulation = 0;
 	global_vars->philos = c_malloc(sizeof(t_philo) * philo_nbr);
 	global_vars->forks = c_malloc(sizeof(t_fork) * philo_nbr);
 	mutex_handler(&global_vars->table, INIT);
@@ -69,6 +69,6 @@ void 	init_structs(t_global *global_vars)
 		global_vars->forks[i].fork_id = i;//assign id
 	}
 	init_philo_struct(global_vars);
-	print_philos(global_vars);
+	//print_philos(global_vars);
 }
 

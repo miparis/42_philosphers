@@ -6,20 +6,22 @@
 /*   By: miparis <miparis@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 15:30:51 by miparis           #+#    #+#             */
-/*   Updated: 2025/03/10 19:45:02 by miparis          ###   ########.fr       */
+/*   Updated: 2025/03/11 10:52:04 by miparis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/philo.h"
 
-/*void	*one_philo(t_philo *philo)
+static void	*one_philo(t_philo *philo)
 {
 	wait_all_threads(philo->g_vars);
 	set_long(&philo->philo_mutex, &philo->last_meal_time, get_time());
 	threads_count(philo->g_vars);
 	write_status(TAKE_FIRST_FORK, philo);
-	while()
-}*/
+	while(!get_state(philo->g_vars))
+		usleep(200);
+	return (NULL);
+}
 
 //faltan cosiñas del thiniking
 static void	thinking(t_philo *philo)
@@ -52,10 +54,10 @@ void	*dinner(t_philo *data)
 	t_philo	*philo;
 
 	philo = data;
+	//WAIT THREADS AL PARECER NO ESTA FUNCIONANDO, 
 	wait_all_threads(philo->g_vars);//wait for all threads to be created
 	set_long(&philo->philo_mutex, &philo->last_meal_time, get_time());//set the last meal time of the incoming philo
 	threads_count(philo->g_vars);//check if all threads are ready
-	
 	//ver cuando fue la ultima vez que comio
 	//check con monitor if simulation has to end
 	while (get_state(philo->g_vars) == false)
@@ -89,15 +91,14 @@ void	simulation(t_global *global_vars)
 		printf("No simulation needed\n");
 		return ; //return to clean eveything
 	}
-	/*else if (global_vars->philo_nbr == 1)
+	else if (global_vars->philo_nbr == 1)
 	{
-		thread_handler(&global_vars->philos[0].t_id, CREATE, dinner, &global_vars->philos[0]);
 		printf("Only one philo\n");//run 1 philo simulation
-	}*/
+		thread_handler(&global_vars->philos[0].t_id, CREATE, (void *)one_philo, &global_vars->philos[0]);
+		global_vars->philos[0].ready = true;
+	}
 	else
 	{
-		global_vars->start_simulation = get_time();
-		printf(B G"Simulation started at %ld\n" NC, global_vars->start_simulation);
 		while ((++i < global_vars->philo_nbr))
 		{
 			printf("---Thread created -> [%d]\n", i);
@@ -105,14 +106,12 @@ void	simulation(t_global *global_vars)
 			global_vars->philos[i].ready = true;
 		}
 	}
+	global_vars->start_simulation = get_time();
+	printf(B G"Simulation started at %ld\n" NC, global_vars->start_simulation);
 	thread_handler(&global_vars->monitor, CREATE, monitor_dinner, global_vars);
-	printf("Ya hemos creado los threads\n");
 	set_bool(&global_vars->table, &global_vars->threads_ready, true);//threads created
 	i = -1;
 	while (++i < global_vars->philo_nbr) // Wait for all threads to finish
-	{
-		printf("JOINING\n");	
 		thread_handler(&global_vars->philos[i].t_id, JOIN, NULL, NULL);
-	}
 }
 
