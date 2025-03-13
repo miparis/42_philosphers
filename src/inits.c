@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   inits.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: miparis <miparis@student.42madrid.com>     +#+  +:+       +#+        */
+/*   By: miparis <miparis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 14:17:53 by miparis           #+#    #+#             */
-/*   Updated: 2025/03/11 10:44:05 by miparis          ###   ########.fr       */
+/*   Updated: 2025/03/13 14:35:12 by miparis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static void init_philo_struct(t_global *global_vars)
 		philo->p_pos = i;
 		philo->g_vars = global_vars;
 		philo->ready = false;
-		philo->last_meal_time = 0;
+		philo->last_meal_time = get_time();
 		mutex_handler(&philo->philo_mutex, INIT);
 		assign_forks(philo, global_vars->forks, i);
 	}

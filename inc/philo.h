@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: miparis <miparis@student.42madrid.com>     +#+  +:+       +#+        */
+/*   By: miparis <miparis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 14:09:35 by miparis           #+#    #+#             */
-/*   Updated: 2025/03/11 10:35:15 by miparis          ###   ########.fr       */
+/*   Updated: 2025/03/13 14:19:52 by miparis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@
 # define NC	"\033[0m"  	// No Color (Resets color and style)
 
 # ifndef MS
-# define MS 60000
+# define MS 6000
 # endif
 
 typedef pthread_mutex_t t_mtx;

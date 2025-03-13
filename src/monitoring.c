@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   monitoring.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: miparis <miparis@student.42madrid.com>     +#+  +:+       +#+        */
+/*   By: miparis <miparis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 16:34:30 by miparis           #+#    #+#             */
-/*   Updated: 2025/03/11 10:42:57 by miparis          ###   ########.fr       */
+/*   Updated: 2025/03/13 14:52:41 by miparis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,11 @@ static bool	philo_died(t_philo *philo)
 
 
 	transcurred = get_time() - get_long(&philo->philo_mutex, &philo->last_meal_time);
-	t_to_die = philo->g_vars->time_to_die;
+	t_to_die = philo->g_vars->time_to_die / 1000;
+	//printf("transcurred: %ld, time to die: %ld\n", transcurred, t_to_die);
 	if (get_bool(&philo->philo_mutex, &philo->full)) // philo is full
 		return (false);
-	if (transcurred > t_to_die) //else he diede
+	if (transcurred >= t_to_die) //else he died
 		return (true);
 	return (false);
 }
@@ -65,7 +66,7 @@ void	*monitor_dinner(void *data)
 	//also cehck if all the philos have eaten the max amount of times
 	while (!get_state(g_vars))
 	{
-		i = 0;
+		i = -1;
 		while(++i < g_vars->philo_nbr)
 		{
 			if (philo_died(g_vars->philos + i))
@@ -75,6 +76,8 @@ void	*monitor_dinner(void *data)
 				return (NULL);
 			}
 		}
+		// aqui el if de las comidas
+			// break;
 	}
 	return (NULL);
 }

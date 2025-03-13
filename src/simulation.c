@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   simulation.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: miparis <miparis@student.42madrid.com>     +#+  +:+       +#+        */
+/*   By: miparis <miparis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 15:30:51 by miparis           #+#    #+#             */
-/*   Updated: 2025/03/11 10:52:04 by miparis          ###   ########.fr       */
+/*   Updated: 2025/03/13 14:53:48 by miparis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,12 @@ static void	eat(t_philo *philo)
 	write_status(TAKE_FIRST_FORK, philo);
 	mutex_handler(&philo->second->fork, LOCK);
 	write_status(TAKE_SECOND_FORK, philo);
+	printf("Last meal before: %ld\n", philo->last_meal_time);
 	set_long(&philo->philo_mutex, &philo->last_meal_time, get_time()); //to check if the philo died
+	printf("Last meal after: %ld\n", philo->last_meal_time);
 	philo->meals_taken++;
 	write_status(EATING, philo);
-	//precise_usleep(philo->g_vars->time_to_eat, philo->g_vars); //after eating, it sleeps
+	precise_usleep(philo->g_vars->time_to_eat / 1000, philo->g_vars); //after eating, it sleeps
 	if (philo->g_vars->meals_max > 0 &&
 		(philo->meals_taken == philo->g_vars->meals_max))
 		set_bool(&philo->philo_mutex, &philo->full, true); // we change the state if we reached the max of meals
@@ -58,6 +60,15 @@ void	*dinner(t_philo *data)
 	wait_all_threads(philo->g_vars);//wait for all threads to be created
 	set_long(&philo->philo_mutex, &philo->last_meal_time, get_time());//set the last meal time of the incoming philo
 	threads_count(philo->g_vars);//check if all threads are ready
+	
+	if (philo->philo_nbr % 2)
+	{
+		if (philo->g_vars->time_to_eat > philo->g_vars->time_to_die)
+			precise_usleep(philo->g_vars->time_to_die / 1000, philo->g_vars);
+		else
+			precise_usleep(philo->g_vars->time_to_eat / 1000, philo->g_vars);
+
+	}
 	//ver cuando fue la ultima vez que comio
 	//check con monitor if simulation has to end
 	while (get_state(philo->g_vars) == false)
@@ -69,7 +80,7 @@ void	*dinner(t_philo *data)
 		eat(philo);
 		//dormir con usleep precise
 		write_status(SLEEPING, philo); 
-		precise_usleep(philo->g_vars->time_to_sleep, philo->g_vars);		
+		precise_usleep(philo->g_vars->time_to_sleep / 1000, philo->g_vars);		
 		//pensar
 		thinking(philo);
 	}

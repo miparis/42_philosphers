@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: miparis <miparis@student.42madrid.com>     +#+  +:+       +#+         #
+#    By: miparis <miparis@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/20 12:32:22 by miparis           #+#    #+#              #
-#    Updated: 2025/03/10 19:38:09 by miparis          ###   ########.fr        #
+#    Updated: 2025/03/13 14:03:29 by miparis          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,7 +35,7 @@ OBJS = ${SRCS:.c=.o}
 .SILENT: $(OBJS)
 
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -g3
+CFLAGS = -Wall -Wextra -Werror -g3 -fsanitize=thread
 REMOVE = rm -f
 
 all: $(NAME)
@@ -45,7 +45,6 @@ $(NAME): $(OBJS)
 	@echo "$(BOLD)$(BLUE)Philosophers are now operative$(NC)"
 
 clean:
-	@$(REMOVE) $(NAME)
 	@$(REMOVE) $(OBJS)
 
 fclean: clean
