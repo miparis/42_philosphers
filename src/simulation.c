@@ -6,23 +6,22 @@
 /*   By: miparis <miparis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 15:30:51 by miparis           #+#    #+#             */
-/*   Updated: 2025/03/13 15:33:42 by miparis          ###   ########.fr       */
+/*   Updated: 2025/03/13 19:09:30 by miparis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/philo.h"
 
-static void	*one_philo(t_philo *philo)
+/*static void	*one_philo(t_philo *philo)
 {
 	wait_all_threads(philo->g_vars);
-	set_long(&philo->philo_mutex, &philo->last_meal_time, get_time());
+	set_long(&philo->philo_mutex, &philo->last_meal_time, get_time());//set the last meal time of the incoming philo
 	threads_count(philo->g_vars);
 	write_status(TAKE_FIRST_FORK, philo);
-	precise_usleep(philo->g_vars->time_to_eat / 1000, philo->g_vars);
-	set_bool(&philo->g_vars->table,  &philo->g_vars->end_simulation,  true);
-	write_status(DIED, philo);
+	while (!get_state(philo->g_vars))
+		usleep(200);
 	return (NULL);
-}
+}*/
 
 //faltan cosiñas del thiniking
 static void	thinking(t_philo *philo)
@@ -103,12 +102,11 @@ void	simulation(t_global *global_vars)
 		printf("No simulation needed\n");
 		return ; //return to clean eveything
 	}
-	else if (global_vars->philo_nbr == 1)
+	/*else if (global_vars->philo_nbr == 1)
 	{
 		printf("Only one philo\n");//run 1 philo simulation
 		thread_handler(&global_vars->philos[0].t_id, CREATE, (void *)one_philo, &global_vars->philos[0]);
-		return ;
-	}
+	}*/
 	else
 	{
 		while ((++i < global_vars->philo_nbr))

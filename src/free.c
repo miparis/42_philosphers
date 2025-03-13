@@ -6,7 +6,7 @@
 /*   By: miparis <miparis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 15:36:44 by miparis           #+#    #+#             */
-/*   Updated: 2025/03/13 15:46:32 by miparis          ###   ########.fr       */
+/*   Updated: 2025/03/13 18:48:31 by miparis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	clean_globals(t_global *g_vars)
 	}
 	mutex_handler(&g_vars->write, DESTROY);
 	mutex_handler(&g_vars->table, DESTROY);
-	mutex_handler(&g_vars->t_ready, DESTROY);
+	//mutex_handler(&g_vars->t_ready, DESTROY);
 	free(g_vars->forks);
 	free(g_vars->philos);
 }

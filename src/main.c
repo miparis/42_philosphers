@@ -12,6 +12,7 @@ int	main(int argc, char *argv[])
 		init_structs(&global_vars); //init
 		simulation(&global_vars);//start simulation
 		//clean aka a philo dies or everyone is full
+		printf(G"--> To clean\n");
 		clean_globals(&global_vars);
 	}
 	else

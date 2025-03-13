@@ -6,7 +6,7 @@
 /*   By: miparis <miparis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 16:34:30 by miparis           #+#    #+#             */
-/*   Updated: 2025/03/13 14:52:41 by miparis          ###   ########.fr       */
+/*   Updated: 2025/03/13 19:05:15 by miparis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,14 @@ void	*monitor_dinner(void *data)
 
 	g_vars = (t_global *)data;
 	i = -1;
+	if (g_vars->philo_nbr == 1)
+	{
+		printf(BB"One philo\n");
+		usleep(g_vars->time_to_die / 1000);
+		set_bool(&g_vars->table, &g_vars->end_simulation, true);
+		write_status(DIED, &g_vars->philos[0]);
+		return (NULL);
+	}
 	//make sure every philo is running by running threds count endesly
 	while (!threads_count(g_vars))
 		;
