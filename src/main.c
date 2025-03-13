@@ -8,14 +8,16 @@ int	main(int argc, char *argv[])
 	if (argc == 5 || argc == 6)
 	{
 		parse_args(&global_vars, argv); //parsear
-		print_global_vars(&global_vars);
+		//print_global_vars(&global_vars);
 		init_structs(&global_vars); //init
 		simulation(&global_vars);//start simulation
 		//clean aka a philo dies or everyone is full
+		clean_globals(&global_vars);
 	}
 	else
 	{
 		error_exit("Please insert a valid amount of arguments\n");
+		clean_globals(&global_vars);
 		//free everything
 	}
 	return (0);

@@ -6,7 +6,7 @@
 #    By: miparis <miparis@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/20 12:32:22 by miparis           #+#    #+#              #
-#    Updated: 2025/03/13 14:03:29 by miparis          ###   ########.fr        #
+#    Updated: 2025/03/13 15:45:43 by miparis          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,8 @@ SRCS =  src/main.c \
 		src/inits.c \
 		src/simulation.c \
 		src/monitoring.c \
-		src/get_set.c
+		src/get_set.c \
+		src/free.c
 
 # Define Colors
 GREEN  := \033[1;32m  # Bold Green

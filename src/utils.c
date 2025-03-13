@@ -6,7 +6,7 @@
 /*   By: miparis <miparis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 11:01:47 by miparis           #+#    #+#             */
-/*   Updated: 2025/03/13 14:28:29 by miparis          ###   ########.fr       */
+/*   Updated: 2025/03/13 15:02:02 by miparis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,9 @@ void write_status(t_status status, t_philo *philo)
 {
     long transcurred;
 
-	printf(BB"--> START: %ld\n", (philo->g_vars->start_simulation));
+	//printf(BB"--> START: %ld\n", (philo->g_vars->start_simulation));
     transcurred = get_time() - (philo->g_vars->start_simulation);
-	printf(BB"--> TRANSCURRED: %ld\n", transcurred);
+	//printf(BB"--> TRANSCURRED: %ld\n", transcurred);
     mutex_handler(&philo->g_vars->write, LOCK);
     if (((status == TAKE_FIRST_FORK) || (status == TAKE_SECOND_FORK)) 
         && (!get_state(philo->g_vars)))

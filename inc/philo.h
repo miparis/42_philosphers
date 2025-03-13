@@ -6,7 +6,7 @@
 /*   By: miparis <miparis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 14:09:35 by miparis           #+#    #+#             */
-/*   Updated: 2025/03/13 14:19:52 by miparis          ###   ########.fr       */
+/*   Updated: 2025/03/13 15:44:35 by miparis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,6 @@ void	thread_handler(pthread_t *thread, t_mutype type,
 void	mutex_handler(t_mtx *mutex, t_mutype type);
 void 	init_structs(t_global *global_vars);
 
-
 /*					Monitoring						*/
 void	*monitor_dinner(void *data);
 bool	threads_count(void *data);
@@ -130,6 +129,8 @@ bool	get_bool(t_mtx *mutex, bool *value);
 void	set_long(t_mtx *mutex, long *dest, long value);
 long	get_long(t_mtx *mutex, long *value);
 
+/*!SECTION 				Free						*/
+void	clean_globals(t_global *g_vars);
 
 /*!SECTION            TEST						    */
 void	print_global_vars(t_global *global);
