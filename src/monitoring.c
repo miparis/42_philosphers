@@ -3,14 +3,36 @@
 /*                                                        :::      ::::::::   */
 /*   monitoring.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: miparis <miparis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: miparis <miparis@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 16:34:30 by miparis           #+#    #+#             */
-/*   Updated: 2025/03/13 19:05:15 by miparis          ###   ########.fr       */
+/*   Updated: 2025/03/14 12:24:18 by miparis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/philo.h"
+
+void	thinking_fairness(t_philo *philo, bool simul)
+{
+    (void)simul;
+    if (philo->g_vars->philo_nbr % 2 == 0)
+    {
+		if (philo->g_vars->time_to_eat > philo->g_vars->time_to_die)
+				precise_usleep(philo->g_vars->time_to_die / 1000, philo->g_vars);
+			else
+				precise_usleep(philo->g_vars->time_to_eat / 1000, philo->g_vars);
+    }
+    else
+    {
+        if (philo->philo_nbr % 2)
+        {
+			if (philo->g_vars->time_to_eat > philo->g_vars->time_to_die)
+				precise_usleep(philo->g_vars->time_to_die / 1000, philo->g_vars);
+			else
+				precise_usleep(philo->g_vars->time_to_eat / 1000, philo->g_vars);
+        }
+    }
+}
 
 static bool	philo_died(t_philo *philo)
 {

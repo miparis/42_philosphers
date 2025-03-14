@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: miparis <miparis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: miparis <miparis@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 14:09:35 by miparis           #+#    #+#             */
-/*   Updated: 2025/03/13 15:44:35 by miparis          ###   ########.fr       */
+/*   Updated: 2025/03/14 11:25:09 by miparis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,8 +105,12 @@ void	wait_all_threads(t_global *g_vars);
 long	get_time(void);
 void	precise_usleep(long time, t_global *g_vars);
 void 	write_status(t_status status, t_philo *philo);
+
+/*SECTION -			 Simulation functions			*/
 void	simulation(t_global *global_vars);
 void	*dinner(t_philo *data);
+void	thinking(t_philo *philo, bool simul);
+void	thinking_fairness(t_philo *philo, bool simul);
 
 /*SECTION -			 init argument functions    	*/
 void	parse_args(t_global *global_vars, char **argv);
