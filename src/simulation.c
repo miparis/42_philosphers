@@ -6,27 +6,34 @@
 /*   By: miparis <miparis@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 15:30:51 by miparis           #+#    #+#             */
-/*   Updated: 2025/03/14 12:31:55 by miparis          ###   ########.fr       */
+/*   Updated: 2025/03/17 11:57:38 by miparis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/philo.h"
 
-//faltan cosiñas del thiniking
-void	thinking(t_philo *philo, bool simul)
+void	*one_philo(void *data)
 {
-	long t_eat;
-	long t_sleep;
-	long t_think;
+	t_philo	*philo;
 
-	if (!simul)
-		write_status(THINKING, philo);
-	t_eat = philo->g_vars->time_to_eat / 1000;
-	t_sleep = philo->g_vars->time_to_sleep / 1000;
-	t_think = t_eat * 2 - t_sleep;
-	if (t_think < 0)
-		t_think = 0;
-	precise_usleep(t_think * 0.42, philo->g_vars);
+	philo = (t_philo *)data;
+	wait_all_threads(philo->g_vars);
+	threads_count(philo->g_vars);
+	set_long(&philo->philo_mutex, &philo->last_meal_time, get_time());
+	write_status(TAKE_FIRST_FORK, &philo->g_vars->philos[0]);
+	while (philo_died(philo) == false)
+	{
+		usleep(philo->g_vars->time_to_die / 1000);
+		set_bool(&philo->g_vars->table, &philo->g_vars->end_simulation, true);
+	}
+	write_status(DIED, philo);
+	return (NULL);
+}
+
+void	thinking(t_philo *philo)
+{
+	write_status(THINKING, philo);
+	usleep(200);
 }
 //Wait for thread creation & syncro start of simulation
 //Endless simulation of dinner() until monitor tells
@@ -37,7 +44,6 @@ static void	eat(t_philo *philo)
 	write_status(TAKE_FIRST_FORK, philo);
 	mutex_handler(&philo->second->fork, LOCK);
 	write_status(TAKE_SECOND_FORK, philo);
-	//printf("Last meal before: %ld\n", philo->last_meal_time);
 	set_long(&philo->philo_mutex, &philo->last_meal_time, get_time()); //to check if the philo died
 	//printf("Last meal after: %ld\n", philo->last_meal_time);
 	philo->meals_taken++;
@@ -55,15 +61,20 @@ void	*dinner(t_philo *data)
 	t_philo	*philo;
 
 	philo = data;
-	//WAIT THREADS AL PARECER NO ESTA FUNCIONANDO, 
 	wait_all_threads(philo->g_vars);//wait for all threads to be created
 	set_long(&philo->philo_mutex, &philo->last_meal_time, get_time());//set the last meal time of the incoming philo
 	threads_count(philo->g_vars);//check if all threads are ready
 
-	
-	thinking_fairness(philo, false);
-	//ver cuando fue la ultima vez que comio
-	//check con monitor if simulation has to end
+	//desyncro the philos to avoid starvations
+	if (philo->philo_nbr % 2)
+	{
+		if (philo->g_vars->time_to_eat > philo->g_vars->time_to_die)
+			precise_usleep(philo->g_vars->time_to_die / 1000, philo->g_vars);
+		else
+			precise_usleep(philo->g_vars->time_to_eat / 1000, philo->g_vars);
+
+	}
+	//check with monitor if simulation has to end due to philo died or all philos are full
 	while (get_state(philo->g_vars) == false)
 	{
 		//agg monitor
@@ -75,7 +86,7 @@ void	*dinner(t_philo *data)
 		write_status(SLEEPING, philo); 
 		precise_usleep(philo->g_vars->time_to_sleep / 1000, philo->g_vars);		
 		//pensar
-		thinking(philo, false);
+		thinking(philo);
 	}
 	return (NULL);
 }
@@ -95,11 +106,11 @@ void	simulation(t_global *global_vars)
 		printf("No simulation needed\n");
 		return ; //return to clean eveything
 	}
-	/*else if (global_vars->philo_nbr == 1)
+	if (global_vars->philo_nbr == 1)
 	{
-		printf("Only one philo\n");//run 1 philo simulation
-		thread_handler(&global_vars->philos[0].t_id, CREATE, (void *)one_philo, &global_vars->philos[0]);
-	}*/
+		thread_handler(&global_vars->philos[0].t_id, CREATE, one_philo, &global_vars->philos[0]);
+		global_vars->philos[0].ready = true;
+	}
 	else
 	{
 		while ((++i < global_vars->philo_nbr))

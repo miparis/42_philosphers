@@ -6,7 +6,7 @@
 /*   By: miparis <miparis@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 11:01:47 by miparis           #+#    #+#             */
-/*   Updated: 2025/03/14 10:32:13 by miparis          ###   ########.fr       */
+/*   Updated: 2025/03/17 11:30:52 by miparis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ void	error_exit(const char *error)
 //ready until all the threads are created
 void	wait_all_threads(t_global *g_vars)
 {
+	if (g_vars->philo_nbr == 1)
+		return ;
 	while (get_bool(&g_vars->table, &g_vars->threads_ready) == false)
 		;
 }
@@ -67,19 +69,19 @@ void write_status(t_status status, t_philo *philo)
     mutex_handler(&philo->g_vars->write, LOCK);
     if (((status == TAKE_FIRST_FORK) || (status == TAKE_SECOND_FORK)) 
         && (!get_state(philo->g_vars)))
-        printf(G "%ld" NC " [%d] has taken a fork\n", transcurred, philo->philo_nbr);
+        printf(G "%ld" NC " %d has taken a fork\n", transcurred, philo->philo_nbr);
 
     if ((status == EATING) && (!get_state(philo->g_vars)))
-        printf(G "%ld" NC " [%d] is eating\n", transcurred, philo->philo_nbr);
+        printf(G "%ld" NC " %d is eating\n", transcurred, philo->philo_nbr);
 
     if ((status == SLEEPING) && (!get_state(philo->g_vars)))
-        printf(G "%ld" NC " [%d] is sleeping\n", transcurred, philo->philo_nbr);
+        printf(G "%ld" NC " %d is sleeping\n", transcurred, philo->philo_nbr);
 
     if ((status == THINKING) && (!get_state(philo->g_vars)))
-        printf(G "%ld" NC " [%d] is thinking\n", transcurred, philo->philo_nbr);
+        printf(G "%ld" NC " %d is thinking\n", transcurred, philo->philo_nbr);
 
     if (status == DIED)
-        printf(G "%ld" NC " [%d] died\n", transcurred, philo->philo_nbr);
+        printf(G "%ld" NC " %d died\n", transcurred, philo->philo_nbr);
 
     mutex_handler(&philo->g_vars->write, UNLOCK);
 }

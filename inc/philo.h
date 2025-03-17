@@ -6,7 +6,7 @@
 /*   By: miparis <miparis@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 14:09:35 by miparis           #+#    #+#             */
-/*   Updated: 2025/03/14 11:25:09 by miparis          ###   ########.fr       */
+/*   Updated: 2025/03/17 11:41:10 by miparis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@
 # define NC	"\033[0m"  	// No Color (Resets color and style)
 
 # ifndef MS
-# define MS 6000
+# define MS 60000
 # endif
 
 typedef pthread_mutex_t t_mtx;
@@ -109,7 +109,8 @@ void 	write_status(t_status status, t_philo *philo);
 /*SECTION -			 Simulation functions			*/
 void	simulation(t_global *global_vars);
 void	*dinner(t_philo *data);
-void	thinking(t_philo *philo, bool simul);
+void	thinking(t_philo *philo);
+bool	philo_died(t_philo *philo);
 void	thinking_fairness(t_philo *philo, bool simul);
 
 /*SECTION -			 init argument functions    	*/
