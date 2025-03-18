@@ -6,7 +6,7 @@
 /*   By: miparis <miparis@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 16:34:30 by miparis           #+#    #+#             */
-/*   Updated: 2025/03/17 11:57:12 by miparis          ###   ########.fr       */
+/*   Updated: 2025/03/18 12:01:31 by miparis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,18 @@
 
 bool	philo_died(t_philo *philo)
 {
-	long	transcurred;
+	long	trans;
 	long	t_to_die;
 
-	if (get_bool(&philo->philo_mutex, &philo->full)) // philo is full
+	if (get_bool(&philo->philo_mutex, &philo->full))
 		return (false);
-	transcurred = get_time() - get_long(&philo->philo_mutex, &philo->last_meal_time);
+	trans = get_time() - get_long(&philo->philo_mutex, &philo->last_meal_time);
 	t_to_die = philo->g_vars->time_to_die / 1000;
-	if (transcurred > t_to_die) //else he died
+	if (trans > t_to_die)
 		return (true);
 	return (false);
 }
 
-//Check if all the threads are ready to start the simulation
 bool	threads_count(void *data)
 {
 	int			ready_count;
@@ -36,7 +35,7 @@ bool	threads_count(void *data)
 	g_vars = (t_global *)data;
 	ready_count = 0;
 	i = 0;
-	while(i < g_vars->philo_nbr)
+	while (i < g_vars->philo_nbr)
 	{
 		mutex_handler(&g_vars->t_ready, LOCK);
 		if (g_vars->philos[i].ready)
@@ -49,7 +48,6 @@ bool	threads_count(void *data)
 	return (false);
 }
 
-//Our monitor checks and determinates if the simulation has to end
 void	*monitor_dinner(void *data)
 {
 	t_global	*g_vars;
@@ -57,16 +55,14 @@ void	*monitor_dinner(void *data)
 
 	g_vars = (t_global *)data;
 	i = -1;
-	//make sure every philo is running by running threds count endesly
+	if (g_vars->philo_nbr == 1)
+		return (NULL);
 	while (!threads_count(g_vars))
 		;
-	//check constantly if the transcurred time is greater than the time to die
-	//if so, we end the simulation
-	//also cehck if all the philos have eaten the max amount of times
 	while (!get_state(g_vars))
 	{
 		i = -1;
-		while(++i < g_vars->philo_nbr)
+		while (++i < g_vars->philo_nbr)
 		{
 			if (philo_died(g_vars->philos + i))
 			{

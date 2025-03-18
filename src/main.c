@@ -1,5 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: miparis <miparis@student.42madrid.com>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/18 10:57:30 by miparis           #+#    #+#             */
+/*   Updated: 2025/03/18 11:22:30 by miparis          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../inc/philo.h"
-// ./philo number_of_philosophers time_to_die time_to_eat time_to_sleep [meals_max]
 
 int	main(int argc, char *argv[])
 {
@@ -7,73 +18,20 @@ int	main(int argc, char *argv[])
 
 	if (argc == 5 || argc == 6)
 	{
-		parse_args(&global_vars, argv); //parsear
-		//print_global_vars(&global_vars);
-		init_structs(&global_vars); //init
-		simulation(&global_vars);//start simulation
-		//clean aka a philo dies or everyone is full
-		//print_philos(&global_vars);
-		//printf(G"--> To clean\n");
+		parse_args(&global_vars, argv);
+		if (global_vars.meals_max == 0)
+		{
+			printf("No simulation needed\n");
+			return (0);
+		}
+		init_structs(&global_vars);
+		simulation(&global_vars);
 		clean_globals(&global_vars);
 	}
 	else
 	{
 		error_exit("Please insert a valid amount of arguments\n");
 		clean_globals(&global_vars);
-		//free everything
 	}
 	return (0);
 }
-
-/*TO CLEAAAAAN*/
-
-
-
-
-
-
-/*
-int mails = 0;
-pthread_mutex_t mutex;
-long unsigned int max_threads = 4;
-
-void *function()
-{
-	int i = 0;
-	while (i < 10000000)
-	{
-		pthread_mutex_lock(&mutex);
-		mails++;
-		pthread_mutex_unlock(&mutex);
-		i++;
-	}
-	return (NULL);
-}
-int main(int argc, char *argv[])
-{
-	pthread_t threads[4];
-	long unsigned int i;
-
-	(void)argc;
-	(void)argv;
-	i = 0;
-	pthread_mutex_init(&mutex, NULL);
-	while (i < max_threads)
-	{
-		printf("Thread %ld has started\n", i);
-		if (pthread_create(&threads[i], NULL, &function, NULL) != 0)
-			printf("Failed to create thread\n");
-		i++;
-	}
-	i = 0;
-	while (i < max_threads)
-	{
-		printf("Thread %ld has ended\n", i);
-		if (pthread_join(threads[i], NULL) != 0)
-			printf("Failed to join\n");
-		i++;
-	}
-	pthread_mutex_destroy(&mutex);
-	printf("Mails received: %d\n", mails);
-	return 0;
-}*/

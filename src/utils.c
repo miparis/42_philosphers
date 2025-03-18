@@ -6,7 +6,7 @@
 /*   By: miparis <miparis@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 11:01:47 by miparis           #+#    #+#             */
-/*   Updated: 2025/03/17 11:30:52 by miparis          ###   ########.fr       */
+/*   Updated: 2025/03/18 11:54:58 by miparis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,10 @@
 
 void	error_exit(const char *error)
 {
-	printf(R "%s\n" NC, error); //NC restaura el color
+	printf(R "%s\n" NC, error);
 	exit(EXIT_FAILURE);
 }
-//This function will endlessly check for the state of threads 
-//ready until all the threads are created
+
 void	wait_all_threads(t_global *g_vars)
 {
 	if (g_vars->philo_nbr == 1)
@@ -27,13 +26,13 @@ void	wait_all_threads(t_global *g_vars)
 		;
 }
 
-long get_time(void)
+long	get_time(void)
 {
-    struct timeval tv;
+	struct timeval	tv;
 
-    if (gettimeofday(&tv, NULL))
-        error_exit("Error getting time\n");
-    return (tv.tv_sec * 1000) + (tv.tv_usec / 1000);
+	if (gettimeofday(&tv, NULL))
+		error_exit("Error getting time\n");
+	return ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
 }
 
 void	precise_usleep(long time, t_global *g_vars)
@@ -42,52 +41,45 @@ void	precise_usleep(long time, t_global *g_vars)
 	long	transcurred;
 	long	remaining;
 
-	start = get_time(); //Obtener tiempo de inicio
-	while (get_time() - start < time) //nos mantenemos en el bucle hasta que time == 0
+	start = get_time();
+	while (get_time() - start < time)
 	{
 		if (get_state(g_vars))
-			break; //salimos si ya no hay simulación
+			break ;
 		transcurred = get_time() - start;
 		remaining = time - transcurred;
-		if (remaining > 1000) //Si queda más de 1000 μs (1 ms), llamamos a usleep() con la mitad del tiempo restante para reducir la carga de la CPU.
+		if (remaining > 1000)
 			usleep(remaining / 2);
 		else
 		{
-			//Si el tiempo restante es muy pequeño, entramos en un busy-waiting loop para mayor precisión.
-			while (get_time() - start < time);
+			while (get_time() - start < time)
+				;
 		}
 	}
 }
 
-void write_status(t_status status, t_philo *philo)
+void	write_status(t_status status, t_philo *philo)
 {
-    long transcurred;
+	long	transcurred;
 
-	//printf(BB"--> START: %ld\n", (philo->g_vars->start_simulation));
-    transcurred = get_time() - (philo->g_vars->start_simulation);
-	//printf(BB"--> TRANSCURRED: %ld\n", transcurred);
-    mutex_handler(&philo->g_vars->write, LOCK);
-    if (((status == TAKE_FIRST_FORK) || (status == TAKE_SECOND_FORK)) 
-        && (!get_state(philo->g_vars)))
-        printf(G "%ld" NC " %d has taken a fork\n", transcurred, philo->philo_nbr);
-
-    if ((status == EATING) && (!get_state(philo->g_vars)))
-        printf(G "%ld" NC " %d is eating\n", transcurred, philo->philo_nbr);
-
-    if ((status == SLEEPING) && (!get_state(philo->g_vars)))
-        printf(G "%ld" NC " %d is sleeping\n", transcurred, philo->philo_nbr);
-
-    if ((status == THINKING) && (!get_state(philo->g_vars)))
-        printf(G "%ld" NC " %d is thinking\n", transcurred, philo->philo_nbr);
-
-    if (status == DIED)
-        printf(G "%ld" NC " %d died\n", transcurred, philo->philo_nbr);
-
-    mutex_handler(&philo->g_vars->write, UNLOCK);
+	transcurred = get_time() - (philo->g_vars->start_simulation);
+	mutex_handler(&philo->g_vars->write, LOCK);
+	if (((status == TAKE_FIRST_FORK) || (status == TAKE_SECOND_FORK))
+		&& (!get_state(philo->g_vars)))
+		printf(G "%ld" NC " %d has taken a fork\n",
+			transcurred, philo->philo_nbr);
+	if ((status == EATING) && (!get_state(philo->g_vars)))
+		printf(G "%ld" NC " %d is eating\n", transcurred, philo->philo_nbr);
+	if ((status == SLEEPING) && (!get_state(philo->g_vars)))
+		printf(G "%ld" NC " %d is sleeping\n", transcurred, philo->philo_nbr);
+	if ((status == THINKING) && (!get_state(philo->g_vars)))
+		printf(G "%ld" NC " %d is thinking\n", transcurred, philo->philo_nbr);
+	if (status == DIED)
+		printf(G "%ld" NC " %d died\n", transcurred, philo->philo_nbr);
+	mutex_handler(&philo->g_vars->write, UNLOCK);
 }
 
-
-
+/*
 void	print_global_vars(t_global *global)
 {
 	if (!global)
@@ -129,4 +121,4 @@ void print_philos(t_global *global_vars)
 		printf(BB"_______________________"NC);
 		i++;
 	}
-}
+}*/
