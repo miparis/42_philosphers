@@ -6,24 +6,23 @@
 /*   By: miparis <miparis@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 14:46:20 by miparis           #+#    #+#             */
-/*   Updated: 2025/03/11 10:39:30 by miparis          ###   ########.fr       */
+/*   Updated: 2025/03/19 11:09:16 by miparis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/philo.h"
 
-// Wrapper for malloc and its control
-void *c_malloc(size_t bytes)
+void	*c_malloc(size_t bytes)
 {
-	void *rst;
+	void	*rst;
 
 	rst = malloc(bytes);
 	if (rst == NULL)
 		error_exit(R "Error with malloc\n");
 	return (rst);
-}	
-/*NOTE - Replica of errno messages for mutex related errors*/ 
-static void check_mutex(int status)
+}
+
+static void	check_mutex(int status)
 {
 	if (status == 0)
 		return ;
@@ -41,7 +40,6 @@ static void check_mutex(int status)
 		printf(R "Mutex error: Unknown mutex error: %d\n", status);
 }
 
-/*NOTE - Wrapper function & control for all of the mutex related functions*/ 
 void	mutex_handler(t_mtx *mutex, t_mutype type)
 {
 	if (type == INIT)
@@ -56,7 +54,6 @@ void	mutex_handler(t_mtx *mutex, t_mutype type)
 		error_exit("Invalid type for mutex use\n");
 }
 
-/*NOTE - Replica of errno messages on the thread related functions*/ 
 static void	check_thread(int status)
 {
 	if (status == 0)
@@ -73,7 +70,6 @@ static void	check_thread(int status)
 		printf(R "Thread error: Unknown error code %d\n", status);
 }
 
-/*NOTE - Wrapper function & control for all of the thread related functions*/ 
 void	thread_handler(pthread_t *thread, t_mutype type,
 		void *(*funct)(void *), void *data)
 {

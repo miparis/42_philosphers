@@ -6,40 +6,43 @@
 /*   By: miparis <miparis@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 14:09:35 by miparis           #+#    #+#             */
-/*   Updated: 2025/03/18 11:30:30 by miparis          ###   ########.fr       */
+/*   Updated: 2025/03/19 11:40:33 by miparis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# ifndef PHILO_H
+#ifndef PHILO_H
 # define PHILO_H
 
-#include <pthread.h>
-#include <stdio.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include <pthread.h>
-#include <limits.h>
-#include <stdbool.h>
-#include <sys/time.h>
-#include <errno.h>
+# include <pthread.h>
+# include <stdio.h>
+# include <unistd.h>
+# include <stdlib.h>
+# include <pthread.h>
+# include <limits.h>
+# include <stdbool.h>
+# include <sys/time.h>
+# include <errno.h>
 
-// Define Colors
-# define G	"\033[1;32m"  // Bold Green
-# define Y	"\033[0;33m"  // Non-bold Yellow
-# define R	"\033[0;31m"  // Regular Red
-# define BB	"\033[1;34m"  // Bold Blue
-# define P	"\033[1;35m"  // Bold Purple
-# define B	"\033[1m"  	// Bold Text
-# define NC	"\033[0m"  	// No Color (Resets color and style)
+# define G	"\033[1;32m"
+# define Y	"\033[0;33m"
+# define R	"\033[0;31m"
+# define BB	"\033[1;34m"
+# define P	"\033[1;35m"
+# define B	"\033[1m"
+# define NC	"\033[0m"
 
 # ifndef MS
-# define MS 60000
+#  define MS 60000
 # endif
 
-typedef pthread_mutex_t t_mtx;
-typedef struct global t_global;
+typedef	pthread_mutex_t			t_mtx;
+typedef struct	s_global		t_global;
+typedef enum	e_mutype		t_mutype;
+typedef enum	e_status		t_status;
+typedef struct	s_fork			t_fork;
+typedef struct	s_philo			t_philo;
 
-typedef enum e_mutype
+enum e_mutype
 {
 	CREATE,
 	INIT,
@@ -48,9 +51,9 @@ typedef enum e_mutype
 	UNLOCK,
 	DETACH,
 	DESTROY
-}	t_mutype;
+};
 
-typedef enum e_status
+enum e_status
 {
 	DIED,
 	SLEEPING,
@@ -58,53 +61,53 @@ typedef enum e_status
 	THINKING,
 	TAKE_FIRST_FORK,
 	TAKE_SECOND_FORK
-}			t_status;
+};
 
-typedef struct fork
+struct s_fork
 {
-	t_mtx 	fork;
-	int 	fork_id;	
-}				t_fork;
+	t_mtx	fork;
+	int		fork_id;
+};
 
-typedef struct philo
+struct s_philo
 {
 	int			philo_nbr;
 	long		meals_taken;
-	long 		last_meal_time;
+	long		last_meal_time;
 	bool		ready;
-	bool		full; // set to true if meals taken == meals_max
-	int			p_pos; // position in the "table"
-	t_fork		*first; /*   FORKS        */
+	bool		full;
+	int			p_pos;
+	t_fork		*first;
 	t_fork		*second;
-	t_mtx		philo_mutex; //utilizado durante la comida para que no realice ninguna otra acción mientras realiza otra
-	pthread_t	t_id; // ID del hilo
+	t_mtx		philo_mutex;
+	pthread_t	t_id;
 	t_global	*g_vars;
-}				t_philo;
+};
 
-typedef struct global
+struct s_global
 {
 	long		philo_nbr;
 	long		time_to_die;
 	long		time_to_eat;
 	long		time_to_sleep;
 	long		meals_max;
-	long		start_simulation; //Time of the start of the simulation
-	bool		threads_ready; //Wait for threads to be created
-	bool		end_simulation; //For the monitor
+	long		start_simulation;
+	bool		threads_ready;
+	bool		end_simulation;
 	t_mtx		t_ready;
-	t_mtx		table; //Avoid races while reading the g_vars 
+	t_mtx		table;
 	t_mtx		write;
 	t_fork		*forks;
 	t_philo		*philos;
 	pthread_t	monitor;
-}				t_global;
+};
 
 /*SECTION -			 Utils    						*/
 void	error_exit(const char *error);
 void	wait_all_threads(t_global *g_vars);
 long	get_time(void);
 void	precise_usleep(long time, t_global *g_vars);
-void 	write_status(t_status status, t_philo *philo);
+void	write_status(t_status status, t_philo *philo);
 
 /*SECTION -			 Simulation functions			*/
 void	simulation(t_global *global_vars);
@@ -119,9 +122,9 @@ void	parse_args(t_global *global_vars, char **argv);
 /* 					Memory & init functions			*/
 void	*c_malloc(size_t bytes);
 void	thread_handler(pthread_t *thread, t_mutype type,
-		void *(*funct)(void *), void *data);
+			void *(*funct)(void *), void *data);
 void	mutex_handler(t_mtx *mutex, t_mutype type);
-void 	init_structs(t_global *global_vars);
+void	init_structs(t_global *global_vars);
 
 /*					Monitoring						*/
 void	*monitor_dinner(void *data);
@@ -140,6 +143,5 @@ void	clean_globals(t_global *g_vars);
 /*!SECTION            TEST						    */
 void	print_global_vars(t_global *global);
 void	print_philos(t_global *global_vars);
-
 
 #endif

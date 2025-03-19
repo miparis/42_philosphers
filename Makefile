@@ -6,7 +6,7 @@
 #    By: miparis <miparis@student.42madrid.com>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/20 12:32:22 by miparis           #+#    #+#              #
-#    Updated: 2025/03/14 10:15:37 by miparis          ###   ########.fr        #
+#    Updated: 2025/03/19 11:50:33 by miparis          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,18 +43,18 @@ all: $(NAME)
 
 $(NAME): $(OBJS)
 	@$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
-	@echo "$(BOLD)$(BLUE)Philosophers are now operative$(NC)"
+	@echo "$(BOLD)$(BLUE)🧙 ​Philosophers are now operative$(NC)"
 
 clean:
 	@$(REMOVE) $(OBJS)
 
 fclean: clean
 	@$(REMOVE) $(NAME)
-	@echo "$(BOLD)$(GREEN)🧹Everything cleaned up!$(NC)"
+	@echo "$(BOLD)$(GREEN)🧹 Everything cleaned up!$(NC)"
 
 re: fclean all
 
 clear:
 	@clear
 
-.PHONY: all clean fclean re clear bonus
+.PHONY: all clean fclean re clear
