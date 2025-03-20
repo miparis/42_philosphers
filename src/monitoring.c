@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   monitoring.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: miparis <miparis@student.42madrid.com>     +#+  +:+       +#+        */
+/*   By: miparis <miparis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 16:34:30 by miparis           #+#    #+#             */
-/*   Updated: 2025/03/18 12:01:31 by miparis          ###   ########.fr       */
+/*   Updated: 2025/03/20 10:56:50 by miparis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,18 @@ bool	threads_count(void *data)
 	return (false);
 }
 
+static void	one_philo_monitor(void *data)
+{
+	t_global	*g_vars;
+
+	g_vars = (t_global *)data;
+	write_status(TAKE_FIRST_FORK, &g_vars->philos[0]);
+	precise_usleep(g_vars->time_to_die / 1000, g_vars);
+	write_status(DIED, &g_vars->philos[0]);
+	set_bool(&g_vars->table, &g_vars->end_simulation, true);
+	return ;
+}
+
 void	*monitor_dinner(void *data)
 {
 	t_global	*g_vars;
@@ -56,7 +68,7 @@ void	*monitor_dinner(void *data)
 	g_vars = (t_global *)data;
 	i = -1;
 	if (g_vars->philo_nbr == 1)
-		return (NULL);
+		return (one_philo_monitor(g_vars), NULL);
 	while (!threads_count(g_vars))
 		;
 	while (!get_state(g_vars))

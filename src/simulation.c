@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   simulation.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: miparis <miparis@student.42madrid.com>     +#+  +:+       +#+        */
+/*   By: miparis <miparis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 15:30:51 by miparis           #+#    #+#             */
-/*   Updated: 2025/03/18 11:56:35 by miparis          ###   ########.fr       */
+/*   Updated: 2025/03/20 10:57:07 by miparis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,18 +17,10 @@ void	*one_philo(void *data)
 	t_philo	*philo;
 
 	philo = (t_philo *)data;
-	philo->g_vars->start_simulation = get_time();
-	philo->g_vars->philos[0].ready = true;
+	set_bool(&philo->philo_mutex, &philo->ready, true);
 	wait_all_threads(philo->g_vars);
-	threads_count(philo->g_vars);
 	set_long(&philo->philo_mutex, &philo->last_meal_time, get_time());
-	write_status(TAKE_FIRST_FORK, &philo->g_vars->philos[0]);
-	while (philo_died(philo) == false)
-	{
-		precise_usleep(philo->g_vars->time_to_die / 1000, philo->g_vars);
-		set_bool(&philo->g_vars->table, &philo->g_vars->end_simulation, true);
-	}
-	write_status(DIED, philo);
+	precise_usleep(philo->g_vars->time_to_die / 1000, philo->g_vars);
 	return (NULL);
 }
 

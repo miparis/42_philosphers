@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: miparis <miparis@student.42madrid.com>     +#+  +:+       +#+        */
+/*   By: miparis <miparis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 14:09:35 by miparis           #+#    #+#             */
-/*   Updated: 2025/03/19 11:40:33 by miparis          ###   ########.fr       */
+/*   Updated: 2025/03/20 10:02:58 by miparis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,12 @@
 #  define MS 60000
 # endif
 
-typedef	pthread_mutex_t			t_mtx;
-typedef struct	s_global		t_global;
-typedef enum	e_mutype		t_mutype;
-typedef enum	e_status		t_status;
-typedef struct	s_fork			t_fork;
-typedef struct	s_philo			t_philo;
+typedef pthread_mutex_t			t_mtx;
+typedef struct s_global			t_global;
+typedef enum e_mutype			t_mutype;
+typedef enum e_status			t_status;
+typedef struct s_fork			t_fork;
+typedef struct s_philo			t_philo;
 
 enum e_mutype
 {
