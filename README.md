@@ -21,7 +21,7 @@ The goal is to manage this process **without deadlocks or data races**, ensuring
 ```bash
 ./philo number_of_philosophers time_to_die time_to_eat time_to_sleep [number_of_times_each_philosopher_must_eat]
 
-![Philosophers Simulation](media/philosophers.gif)
+![Philosophers Simulation](philo usage & log.webm)
 ```
 
 ### Arguments
