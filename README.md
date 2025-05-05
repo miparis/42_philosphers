@@ -1,6 +1,3 @@
-Here's a complete and well-structured `README.md` file for your **Philosophers** project, based entirely on the context and details you provided:
-
----
 
 # 🧠 Philosophers
 
@@ -18,7 +15,7 @@ The goal is to manage this process **without deadlocks or data races**, ensuring
 
 ## ⚙️ Usage
 
-<video src="philo_usage_log.webm" autoplay loop muted width="500"></video>
+![Philosophers Simulation](philo_simulation.gif)
 
 ```bash
 ./philo number_of_philosophers time_to_die time_to_eat time_to_sleep [number_of_times_each_philosopher_must_eat]
