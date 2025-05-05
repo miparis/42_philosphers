@@ -1,7 +1,7 @@
 
 # 🧠 Philosophers
 
-The **Philosophers** project is an implementation of the classic **Dining Philosophers Problem**, a concurrency challenge used to illustrate resource sharing and synchronization in operating systems. This project is developed in C using **POSIX threads** and **mutexes** to manage concurrent access to shared resources (forks).
+The **Philosophers** project is an implementation of the classic **Dining Philosophers Problem**, a concurrency challenge used to illustrate resource sharing and synchronization in operating systems. This project is developed in C using **threads** and **mutexes** to manage concurrent access to shared resources (forks).
 
 ---
 
@@ -14,8 +14,6 @@ The goal is to manage this process **without deadlocks or data races**, ensuring
 ---
 
 ## ⚙️ Usage
-
-![Philosophers Simulation](philo_simulation.gif)
 
 ```bash
 ./philo number_of_philosophers time_to_die time_to_eat time_to_sleep [number_of_times_each_philosopher_must_eat]
@@ -83,3 +81,4 @@ Each philosopher can be in one of three states:
 - **Sleeping**
 
 ---
+👨‍💻 Developed by @miparis. For a more detailed guide of the implementation go to https://miparis.gitbook.io/www.42miparis.com
