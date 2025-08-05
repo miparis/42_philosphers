@@ -81,4 +81,4 @@ Each philosopher can be in one of three states:
 - **Sleeping**
 
 ---
-👨‍💻 Developed by @miparis. For a more detailed guide of the implementation go to https://miparis.gitbook.io/www.42miparis.com
+👨‍💻 Developed by @miparis. Check out the full project guide in  [philosophers] (https://app.gitbook.com/o/xcgqfjOLbGMBmRoxBpKN/s/oARAcOAadtRlDNvtSGWo/)
